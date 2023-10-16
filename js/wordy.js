@@ -3,20 +3,38 @@ export default {
 	findWords
 };
 
-
-// ****************************
+let words = [];
 
 function loadWords(wordList) {
-	// TODO: implement a data structure for the array
-	// `wordList` parameter; return the number
-	// of entries inserted into the data structure
-	return 0;
+	words = [...wordList];
+	return words.length;
 }
 
 function findWords(input) {
-	// TODO: implement unscrambling/searching logic
-	// for a string of uppercase letters in the
-	// `input` parameter; return the array of
-	// matching words
-	return [];
+	let result = [];
+
+	for (let word of words){
+		if (input.length < word.length) {
+			continue;
+		}
+
+		if (hasMatch(input, word)){
+			result.push(word);
+		}
+	}
+
+	return result;
 }
+
+function hasMatch(input, word) {
+	const wordLetters = word.split('');
+
+	for (const letter of wordLetters) {
+		const idx = input.split('').indexOf(letter);
+		if (idx === -1) return false;
+		input = input.slice(0,idx) + input.slice(idx + 1);
+	}
+
+	return true;
+}
+
